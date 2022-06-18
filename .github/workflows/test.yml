@@ -4,7 +4,7 @@ on: [ push, pull_request, workflow_dispatch ]
 
 jobs:
   build_pkg:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
 
     - name: Checkout
@@ -12,25 +12,24 @@ jobs:
 
     - name: Set env vars
       id: slug
-      run: |
-        echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
-        echo "pkg_file=IV0000-APOL00004_00-APOLLO0000000PS4.pkg" >> $GITHUB_ENV
-        echo "llvm_ver=10.0" >> $GITHUB_ENV
+      run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
 
       # temporary release until 0.53 is released
     - name: Download OpenOrbis Toolchain
       run: |
         curl -sL https://github.com/illusion0001/OpenOrbis-PS4-Toolchain/releases/download/0.0.1.416/toolchain.tar.gz | tar xvz -C ./
         echo "OO_PS4_TOOLCHAIN=${GITHUB_WORKSPACE}/OpenOrbis/PS4Toolchain" >> $GITHUB_ENV
-        sudo apt install clang lldb lld
 
-    - name: Build Apollo App Package
-      run: make && ls
+    - name: install build tools
+      run: sudo apt install clang lldb lld
+
+    - name: Build App Package
+      run: make
 
     - name: Push package artifact
       uses: actions/upload-artifact@v3
       with:
-        name: apollo-ps4-build_${{ steps.slug.outputs.sha8 }}
+        name: build_${{ steps.slug.outputs.sha8 }}
         path: IV0000-CHIP00090_00-CHIPEMULAT000000.pkg
-        if-no-files-found: warn
+        if-no-files-found: error
         retention-days: 7 # don't keep artifacts for too long
