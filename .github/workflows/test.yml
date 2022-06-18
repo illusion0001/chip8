@@ -22,7 +22,7 @@ jobs:
       run: |
         curl -sL https://github.com/illusion0001/OpenOrbis-PS4-Toolchain/releases/download/0.0.1.416/toolchain.tar.gz | tar xvz -C ./
         echo "OO_PS4_TOOLCHAIN=${GITHUB_WORKSPACE}/OpenOrbis/PS4Toolchain" >> $GITHUB_ENV
-        cp oosdk_libraries/build_rules.mk OpenOrbis/PS4Toolchain/build_rules.mk
+        # cp oosdk_libraries/build_rules.mk OpenOrbis/PS4Toolchain/build_rules.mk
 
     - name: Cache LLVM and Clang
       id: cache-llvm
