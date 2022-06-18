@@ -44,6 +44,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: apollo-ps4-build_${{ steps.slug.outputs.sha8 }}
-        path: **.pkg
+        path: IV0000-CHIP00090_00-CHIPEMULAT000000.pkg
         if-no-files-found: warn
         retention-days: 7 # don't keep artifacts for too long
