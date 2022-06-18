@@ -22,6 +22,7 @@ jobs:
       run: |
         curl -sL https://github.com/illusion0001/OpenOrbis-PS4-Toolchain/releases/download/0.0.1.416/toolchain.tar.gz | tar xvz -C ./
         echo "OO_PS4_TOOLCHAIN=${GITHUB_WORKSPACE}/OpenOrbis/PS4Toolchain" >> $GITHUB_ENV
+        sudo apt install clang lldb lld
 
     - name: Build Apollo App Package
       run: make && ls
